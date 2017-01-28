@@ -1,14 +1,19 @@
-class Beer
+class BeerSong
   def verse(quantity)
     verse_for(bottles(quantity))
   end
 
-  def sing(*verses)
+  def verses(*verses)
     start  = verses.fetch(0)
     finish = verses.fetch(1, 0)
     start.downto(finish).each_with_object('') do |line, lyrics|
-      lyrics << "#{verse(line)}\n"
+      lyrics << "\n" unless lyrics.empty?
+      lyrics << "#{verse(line)}"
     end
+  end
+
+  def lyrics
+    verses(99, 0)
   end
 
   private
