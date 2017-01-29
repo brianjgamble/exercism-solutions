@@ -1,14 +1,28 @@
-class DNA
-  THYMINE = 'T'
-  URACIL  = 'U'
+class Complement
+  RNA_STRANDS = { 'G' => 'C',
+                  'C' => 'G',
+                  'T' => 'A',
+                  'A' => 'U' }
 
-  attr_reader :sequence
+  def self.of_dna(strand)
+    Complement.new(strand).to_rna
+  end
 
-  def initialize(sequence)
-    @sequence = sequence
+  def initialize(strand)
+    @strand = strand
   end
 
   def to_rna
-    sequence.tr(THYMINE, URACIL)
+    "".tap do |conversion|
+      if valid_strand?
+        @strand.chars.each do |ch|
+          conversion << RNA_STRANDS[ch]
+        end
+      end
+    end
+  end
+
+  def valid_strand?
+    /[^GCTA]/.match(@strand) == nil
   end
 end
