@@ -1,24 +1,26 @@
 class Bob
-  def hey(words)
-    reply_to speech(words)
+  def self.hey(words)
+    speech = Speech.new(words)
+    bob    = Bob.new(speech)
+    bob.reply
   end
 
-  private
+  def initialize(speech)
+    @speech = speech
+  end
 
-  def reply_to(speech)
+  attr_reader :speech
+
+  def reply
     if speech.shouting?
-      'Woah, chill out!' 
+      'Whoa, chill out!' 
     elsif speech.question?
       'Sure.'
     elsif speech.silence?
-      'Fine. Be that way.'
+      'Fine. Be that way!'
     else
       'Whatever.'
     end
-  end
-
-  def speech(words)
-    Speech.new(words)
   end
 end
 
@@ -28,7 +30,7 @@ class Speech < String
   end
 
   def shouting?
-    !empty? && (self == self.upcase)
+    !empty? && (self == self.upcase) && (/[^,?0-9\s]/.match(self) != nil)
   end
 
   def question?
