@@ -9,11 +9,11 @@ defmodule Words do
   end
         
   defp count_words(words) do
-    Enum.reduce words, HashDict.new, count_word(&1, &2)
+    Enum.reduce(words, %{}, &(count_word(&1, &2)))
   end
   
   defp count_word(word, dict) do
-    HashDict.update dict, word |> String.downcase, 1, &1 + 1
+    Map.update(dict, String.downcase(word), 1, &(&1 + 1))
   end
 end
 
@@ -23,8 +23,8 @@ defmodule Text do
   """
   def as_words(string) do
     string
-      |> String.split(%r{\W}) 
-      |> Enum.reject(is_empty? &1)    
+      |> String.split(~r/[^\w0-9-]|_/u) 
+      |> Enum.reject(&(is_empty?(&1)))    
   end
   
   defp is_empty?(string), do: String.length(string) == 0
