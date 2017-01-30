@@ -1,15 +1,17 @@
 class Anagram < String
   def match(words)
-    words.select { |word| !is_identical?(word) && is_anagram?(word) }
+    words.select do |word| 
+      !identical?(word) && anagram?(word)
+    end
   end
 
   private
 
-  def is_identical?(word)
+  def identical?(word)
     word.downcase == downcase
   end
 
-  def is_anagram?(word)
+  def anagram?(word)
     word.downcase.chars.sort == downcase.chars.sort 
   end
 end
