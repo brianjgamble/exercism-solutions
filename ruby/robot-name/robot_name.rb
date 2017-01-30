@@ -14,6 +14,6 @@ class Robot
   end
   
   def unit
-    "%03d" % rand(999)
+    "%03d" % Random.new.rand(999)
   end    
 end
